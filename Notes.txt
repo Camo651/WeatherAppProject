@@ -1,0 +1,26 @@
+function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(success, error);
+    } else { 
+        alert("Geolocation is not supported by this browser.");
+    }
+}
+
+function success(position) {
+    var latitude  = position.coords.latitude;
+    var longitude = position.coords.longitude;
+    var apiURL = "https://api.open-meteo.com/v1/forecast?latitude="+latitude+"&longitude="+longitude+"&hourly=temperature_2m";
+    var weatherData = new XMLHttpRequest();
+    weatherData.open("GET", apiURL, true);
+    weatherData.send();
+    weatherData.onload = function() {
+        var weatherData = JSON.parse(weatherData.responseText);
+        var temp = weatherData.hourly.temperature_2m;
+        var tempDisp = document.getElementById("temp");
+        tempDisp.innerHTML = "Temperature: " + temp + "°F";
+    }
+}
+
+function error() {
+    alert("Unable to retrieve your location");
+}

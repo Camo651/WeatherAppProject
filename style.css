@@ -1,9 +1,87 @@
 body{
-    background-color: #000000;
-    color: #8a4444;
-    font-family: "Arial", sans-serif;
-    font-size: 14px;
+    
+    font-family: 'Open Sans', sans-serif;
+    font-size: 16px;
     line-height: 1.5;
+    height: 100%;
+    margin: 0;
+
+    padding: 0;
+}
+#locationDisplay{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
     margin: 0;
     padding: 0;
 }
+#currentTemp{
+    font-size: 3em;
+    font-weight: 300;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+#currentTemp h1{
+    font-size: 1em;
+    font-weight: 100;
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+}
+#currentTemp h2{
+    font-size: 1em;
+    font-weight: 200;
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+}
+
+#images{
+    margin: 0;
+    padding: 0;
+    align-items: center;
+    display: flex;
+    position: absolute;
+    bottom: 0;
+}
+
+svg{
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    z-index: -1;
+    bottom: 0;
+}
+#mtnPath{
+    z-index: -1;
+    position: relative;
+}
+#mtnShine{
+    z-index: -1;
+    position: absolute;
+    bottom: 0;
+    width: 100vw;
+}
+#sunPath{
+    z-index: 1;
+    position: absolute;
+}
+#moonPath{
+    z-index: 1;
+    position: absolute;
+}
+#forecast{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    margin: 0;
+    padding: 0;
+}
+
+
+
