@@ -1,5 +1,37 @@
 var currentTime = new Date();
-var currentHour = currentTime.getHours();
+var secondsSinceMidnight = currentTime.getHours() * 3600 + currentTime.getMinutes() * 60 + currentTime.getSeconds();
+var sunriseTime = 25;
+var sunsetTime = 75;
+
+function getSunGradient(){
+    var day = [12,101,255];
+    var night = [24,5,55];
+    var sun = [193,132,53];
+    var sunTime = 3
+    var sunGradient = {};
+    sunGradient[0] = night;
+    sunGradient[sunriseTime - sunTime] = night;
+    sunGradient[sunriseTime] = sun;
+    sunGradient[sunriseTime + sunTime] = day;
+    sunGradient[50] = day;
+    sunGradient[sunsetTime - sunTime] = day;
+    sunGradient[sunsetTime] = sun;
+    sunGradient[sunsetTime + sunTime] = night;
+    sunGradient[100] = night;
+}
+
+var aaa = 0;
+animate();
+async function animate() {
+    var currentTime = new Date();
+    // var secondsSinceMidnight = currentTime.getHours() * 3600 + currentTime.getMinutes() * 60 + currentTime.getSeconds();
+    // var timeNormalized = secondsSinceMidnight / 86400;
+    var timeNormalized = aaa / 1000;
+    aaa += 1;
+    var currentColor = evaluateGradient(getSunGradient(), timeNormalized);
+    document.body.style.backgroundColor = colorToString(currentColor);
+    requestAnimationFrame(animate);
+}
 
 getLocation();
 
@@ -15,7 +47,7 @@ function success(position) {
     var timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
     var latitude  = position.coords.latitude;
     var longitude = position.coords.longitude;
-    var apiURL = "https://api.open-meteo.com/v1/forecast?latitude="+latitude+"&longitude="+longitude+"&daily=weathercode,temperature_2m_max,temperature_2m_min&current_weather=true&timezone="+timeZone;
+    var apiURL = "https://api.open-meteo.com/v1/forecast?latitude="+latitude+"&longitude="+longitude+"&daily=weathercode,temperature_2m_max,temperature_2m_min,sunrise,sunset&current_weather=true&timezone="+timeZone;
     var weatherData = new XMLHttpRequest();
     weatherData.open("GET", apiURL, true);
     weatherData.send();
@@ -37,6 +69,10 @@ function setData(data) {
     var currentWeatherCode = weatherData.current_weather.weathercode;
     document.getElementById("currentTempTemp").innerHTML = currentTemp + "°F";
     document.getElementById("currentTempText").innerHTML = weatherCodeToTitle(currentWeatherCode);
+
+    sunriseTime = weatherData.daily[0].sunrise;
+    console.log("sunriseTime: " + sunriseTime);
+    sunsetTime = weatherData.daily[0].sunset;
 
 }
 
@@ -60,6 +96,26 @@ async function setLocationDisplay(lat, lon){
     }
 }
 
-var sun = document.getElementById("sunPath");
-var moon = document.getElementById("moonPath");
 
+
+function evaluateGradient(g, t) {
+    t = clamp(t*100, 0, 100);
+    var keys = Object.keys(g);
+    var lowerKey = 0;
+    var upperKey = 0;
+    for (var i = 0; i < keys.length; i++) {
+        if (t < keys[i]) {
+            upperKey = keys[i];
+            break;
+        }
+        lowerKey = keys[i];
+    }
+    var lowerColor = g[lowerKey];
+    var upperColor = g[upperKey];
+    var tNormalized = (t - lowerKey) / (upperKey - lowerKey);
+    return interpolateColor(lowerColor, upperColor, tNormalized);
+}
+function colorToString(c) {return "rgb(" + c[0] + "," + c[1] + "," + c[2] + ")";}
+function interpolateColor(c1, c2, t) {return [Math.floor(lerp(c1[0], c2[0], t)),Math.floor(lerp(c1[1], c2[1], t)),Math.floor(lerp(c1[2], c2[2], t))]}
+function lerp(a, b, t) {return a + (b - a) * clamp(t, 0, 1);}
+function clamp(v, min, max) {return Math.min(Math.max(v, min), max);}
