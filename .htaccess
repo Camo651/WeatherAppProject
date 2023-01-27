@@ -1,0 +1,29 @@
+Options +FollowSymLinks -Indexes
+
+
+#BUILDER-START#
+# Enable rewriting.
+RewriteEngine on
+Header add Vary "User-Agent"
+Header add X-Generated "%t"
+Options -Indexes
+Options +FollowSymLinks
+RewriteBase /
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^$ index.html
+RewriteRule ^([^/]+)/([^/]+)/?.*$ $1_$2.html
+RewriteRule ^([^/]+)/$ $1.html
+RewriteRule ^([\w_-]+)$ $1.html
+#BUILDER-END#
+
+
+
+
+# Begin EnforceSSL matthagger.me
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteCond %{HTTP_HOST} ^(www.)?weather.matthagger.me$
+RewriteCond %{HTTPS} !=on
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L]
+</IfModule>
+# End EnforceSSL

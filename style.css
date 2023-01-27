@@ -3,84 +3,139 @@ body{
     font-family: 'Open Sans', sans-serif;
     font-size: 16px;
     line-height: 1.5;
-    height: 100%;
-    margin: 0;
-
-    padding: 0;
-}
-#locationDisplay{
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
+    flex-direction: row;
     margin: 0;
-    padding: 0;
+}
+#appWindow{
+    max-width: 1200px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgb(0 0 0 / 50%);
+    position: relative;
+    overflow: hidden;
+    margin-top: min(15px, 30vh);
+    transition: all 1s;
 }
 #currentTemp{
-    font-size: 3em;
-    font-weight: 300;
     margin: 0;
     padding: 0;
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
     flex-direction: column;
 }
-#currentTemp h1{
-    font-size: 1em;
+#locationDisplay{
+    font-size: 3vh;
     font-weight: 100;
     font-family: 'Roboto', sans-serif;
     margin: 0;
+    color: #ffffff82;
 }
-#currentTemp h2{
-    font-size: 1em;
-    font-weight: 200;
+#currentTempTemp{
+    font-size: 19vh;
+    font-weight: 300;
     font-family: 'Roboto', sans-serif;
     margin: 0;
+    color: #fff;
+    margin-inline-start: 5vh;
 }
-
-#images{
+#currentTempText{
+    font-size: 3vh;
+    font-weight: 100;
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    margin-top: 10px;
+    color: #fff;
+}
+#textArea{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
     margin: 0;
     padding: 0;
-    align-items: center;
+    margin-top: 20px;
+    min-height: 40vh;
+}
+#images{
+    width: -webkit-fill-available;
     display: flex;
-    position: absolute;
-    bottom: 0;
+    justify-content: center;
+    margin-top: 62px;
 }
 
 svg{
-    width: 100vw;
-    height: 100vh;
-    position: absolute;
-    z-index: -1;
-    bottom: 0;
+    width: -webkit-fill-available;
 }
 #mtnPath{
     z-index: -1;
     position: relative;
+    transition: all 2.5s;
 }
 #mtnShine{
-    z-index: -1;
-    position: absolute;
-    bottom: 0;
-    width: 100vw;
-}
-#sunPath{
     z-index: 1;
     position: absolute;
-}
-#moonPath{
-    z-index: 1;
-    position: absolute;
+    bottom: inherit;
+    width: -webkit-fill-available;
+    overflow: visible;
 }
 #forecast{
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: row;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     margin: 0;
     padding: 0;
+    margin-top: -2px;
+    padding-bottom: 2%;
+    height: fit-content;
+    transition: all 2s;
+}
+#forecast div{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    padding: 0;
+    margin: 2% 5%;
+    width: 100%;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    padding: 7vh 6px;
+    transition: all 2s;
+}
+#dayLineBreak{
+    width: 90%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-top: 1px solid #fff;
+}
+#forecast h3{
+    font-size: 3vh;
+    font-weight: 100;
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    color: #fff;
+}
+#forecast h4{
+    font-size: 2vh;
+    font-weight: 200;
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    color: #ffffff82;
+    text-align: right;
+}
+#wcSVG{
+    width: 48px;
+    height: 48px;
+    fill: white;
+    margin-right: 10px;
+    transform: translateY(14px);
 }
 
 
